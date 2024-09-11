@@ -1,5 +1,3 @@
-use std::result;
-
 fn main() {
     //stack copy value
     // let x: &str="hello"; //string literal non expandable
@@ -19,10 +17,13 @@ fn main() {
     //valid. you have to do call clone() method for deep copy and default one is move not 
     // shallow. Also when heap String passed to the functions it takes ownership.
 
-    let s: String = String::from("Abdulrehman Javed");
+    let mut s: String = String::from("Abdulrehman Javed");
     let len: usize = calculate_len(&s); //Borrowed by & //at this moment we have passed the ownership of s to calculate_len
     //which mean calculate_len is responsible to drop() its scop to clear memory now. 
     println!("the values of s and len are {} {}",s , len);
+    change_me(&mut s);
+    println!("the values of s appended is {}",s);
+    
 
 
 }
@@ -37,3 +38,21 @@ fn main() {
 fn calculate_len(s: &String) -> usize {
     return s.len();
 }
+
+//how other function can mutate the value not just read as it was in only refernce case, it cannot modify using *(deref)
+fn change_me(s: &mut String) -> () {
+    s.push_str(" change append");
+}
+
+//also note about mutable refence that if you have a mutable reference to a value, you can have no other ref to tht value.
+// fn test_fn() -> (){
+//     let mut s1: String= String::from("hello");
+
+//     let s2= &mut s1;
+//     let s3= &mut s1;
+
+//     s2.push_str("string");
+// }
+
+
+
